@@ -386,18 +386,14 @@ let decRes = didClient.utils.sm4Encrypt(key,msg)
 ## Security Considerations
 
 ### Key Management
-The Key of grg did is derived from the mnemonic based on HD wallet. Users can recover it's did identity by mnemonic. Mnemonics and did document are created locally on the client side to avoid the disclosure of the private key.
+The Key of grg did is derived from the mnemonic based on the HD wallet. Users can recover it's did identity by mnemonic. Mnemonics and did document are created locally on the client-side to avoid the disclosure of the private key.
 
 ### Identity authentication
-GRG did document security authentication is based on cryptography algorithm. A signature is used to verify that the claim is from a trusted did user.
-What should be noted is the authenticity verification of the issuer. An alliance block chain maintained by an official organization is designed and used. 
-In the alliance chain, the did document of the certification authority should be stored, and its did ID number should be displayed on the official website of the relevant organization. 
-Therefore, the verifier can verify claim based on this information.
+GRG did document security authentication is based on the cryptography algorithm. A signature is used to verify that the claim is from a trusted did user. What should be noted is the authenticity verification of the issuer. An alliance blockchain maintained by an official organization is designed and used. In the alliance chain, the did document of the certification authority should be stored, and its did ID number should be displayed on the official website of the relevant organization. Therefore, the verifier can verify claims based on this information.
 
 ## Privacy Considerations
-The privacy protection of did includes two parts: 
+The privacy protection of did includes two parts:
 1. Claim file privacy security；
 2. Claim content privacy security;
 
-For the first point, in grg did system, users are encouraged to store verifiable declaration files locally, so the claim file privacy is protected through security mechanism on the client side.
-For the second point, it is suggested that the issuer should only include the the minimum elements when issuing claim.
+For the first point, in grg did system, users are encouraged to store verifiable declaration files locally, so the claim file privacy is protected through security mechanism on the client-side. For the second point, it is suggested that the issuer should only include the minimum elements when issuing a claim.
