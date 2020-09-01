@@ -102,7 +102,7 @@ grg-specific-idstring = ethereum-address
 ````
 
 When create a did, will generate a mnemonic, and drive three wallets by a different path.
-1. path is: m/44'/60'/0'/0/0, the ethereum-address is used in grg-specific-idstring as grg did id.
+1. path is: m/44'/60'/0'/0/0, the ethereum-address of this wallet is used in grg-specific-idstring as grg did id.
 2. path is: m/44'/60'/0'/0/1, the path of the main wallet.
 3. path is: m/44'/60'/0'/0/2, the path of recovery wallet.
 
