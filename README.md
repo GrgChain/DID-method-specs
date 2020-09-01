@@ -73,7 +73,7 @@
 
 #### 2. DID wallet create 
 
-create wallet mnemonic by Bip39， here is the example：
+create wallet mnemonic by HD wallet，here is the example：
 
 ```
 eg: device leg summer source assault drill pilot include excess sausage immense year m/1 m/2
@@ -89,6 +89,30 @@ for example there is a mnemonic：device leg summer source assault drill pilot i
 the path of main wallet is : m/44'/60'/0'/0/1
 
 the path of recovery wallet is ：m/44'/60'/0'/0/2
+
+## Method-specific DID Syntax
+
+The namestring that identifies this DID method is: grg
+The DID comprises of multiple elements separated by colons (:):
+A DID that uses this method MUST begin with the following prefix: did:grg. Per this DID specification, this string MUST be in lowercase.
+
+````
+grg-did = "did:grg" grg-specific-idstring
+grg-specific-idstring = ethereum-address
+````
+
+When create a did, will generate a mnemonic, and drive three wallets by a different path.
+1. path is: m/44'/60'/0'/0/0, the ethereum-address is used in grg-specific-idstring as grg did id.
+2. path is: m/44'/60'/0'/0/1, the path of the main wallet.
+3. path is: m/44'/60'/0'/0/2, the path of recovery wallet.
+
+### Example
+
+A valid grg DID might be :
+
+```
+did:grg:0x802B718AF528214931E2642C2b113436C847a16b
+```
 
 ## SDK install
 
@@ -109,6 +133,8 @@ let didClient = new DidClient(options);
 
 #### 1. Create DID
 
+Create a DID by such function in JS SDK. This will return a did document and private info of this DID.
+At the start of this document, provide an example of "didInfo" and "didDocument".
 ```
 let res = await didClient.createDid();
 
@@ -124,7 +150,8 @@ let res = await didClient.createDid();
 ```
 
 #### 2. get Login  Token
-
+To update your did info, you need to get Login Token from service by this function.
+And then use the token as a param in the following function.
 ```
 @param didInfo
 
@@ -142,6 +169,8 @@ let res = didClient.getLoginToken(didInfo);
 ```
 
 #### 3. Update Document Service 
+
+Here is an example of how to update document service. Use JSON to describe your service and then use the update function like the following example.
 
 ```
 @param
@@ -168,7 +197,7 @@ let res = await didClient.updateDidService(
 ```
 
 #### 4. reset Document publickey
-
+Reset your document publickey by this function, please note that, in this case, all the claims issued by this did will be invalid.
 ```
 @param
 1. didInfo
@@ -182,7 +211,7 @@ let res = await didClient.updateDidPubkey(didInfo, type, token);
 ```
 
 #### 5. recover DID Document
-
+Recover your did info and did document by your did mnemonic, here is an example.
 ```
 @param
 1. mnemonic
@@ -218,8 +247,8 @@ let res = await didClient.resolver.getDid({did:id});
 }
 ```
 
-#### 7. delete DID
-
+#### 7. delete(revoke) DID
+Deletion means invalidation of the existing DID
 ```
 @param
 1. didInfo
@@ -232,7 +261,7 @@ let res = await didClient.removeDid(didInfo, token);
 ```
 
 #### 8. to be issuer
-
+In grg did system, you can apply to be an issuer, and issue a claim to other did user.
 ```
 @param
 1. issuerProvideData = 
@@ -253,13 +282,13 @@ let res = await didClient.addIssuer(issuerProvideData);
 
 ## Method for issuer
 
-#### 1. Sign for DID document
+#### 1. verify DID document
 
 ```
 @param: didDocument（Json）
 
 
-let res = adidClient.verifyDid(didDocument)
+let res = await didClient.didClaim.verifyDid(didDocument)
 
 @return
 {code: 0, content: true, msg: "success"}
@@ -288,6 +317,8 @@ let res await didClient.didClaim.verifyApplyMsg(apply);
 ```
 
 #### 3. Issue claim
+When the issuer issue a claim to the user, he must create a rawClaim first, then use the issue claim function in JS SDK.
+Here is an example.
 
 ```
 @param
